@@ -149,7 +149,7 @@ class AlphaZeroNetwork(nn.Module):
             policy_logits, value = self(state_tensor)
 
         # Softmax → mask illegal moves → renormalize
-        policy = torch.softmax(policy_logits, dim=1).squeeze(0).numpy()
+        policy = torch.softmax(policy_logits, dim=1).squeeze(0).cpu().numpy()
         mask = game.get_legal_moves_mask()
         policy *= mask
         total = policy.sum()
@@ -158,7 +158,7 @@ class AlphaZeroNetwork(nn.Module):
         else:
             policy = mask / mask.sum()
 
-        return policy, value.item()
+        return policy, value.cpu().item()
 
 
 # -----------------------------------------------------------------------

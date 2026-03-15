@@ -257,8 +257,8 @@ class MCTS:
         with torch.no_grad():
             policy_logits, value = self.network(state_tensor)
 
-        policy = torch.softmax(policy_logits, dim=1).squeeze(0).numpy()
-        value = value.item()
+        policy = torch.softmax(policy_logits, dim=1).squeeze(0).cpu().numpy()
+        value = value.cpu().item()
 
         # Mask illegal moves and renormalize
         mask = game.get_legal_moves_mask()
