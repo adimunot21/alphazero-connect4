@@ -249,7 +249,9 @@ class MCTS:
         import torch
 
         nn_input = game.get_nn_input()
-        state_tensor = torch.FloatTensor(nn_input).unsqueeze(0)  # add batch dim
+        # Send to same device as the network
+        device = next(self.network.parameters()).device
+        state_tensor = torch.FloatTensor(nn_input).unsqueeze(0).to(device)
 
         self.network.eval()
         with torch.no_grad():

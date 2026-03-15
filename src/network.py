@@ -142,7 +142,8 @@ class AlphaZeroNetwork(nn.Module):
         """
         self.eval()
         nn_input = game.get_nn_input()
-        state_tensor = torch.FloatTensor(nn_input).unsqueeze(0)
+        device = next(self.parameters()).device
+        state_tensor = torch.FloatTensor(nn_input).unsqueeze(0).to(device)
 
         with torch.no_grad():
             policy_logits, value = self(state_tensor)
