@@ -54,6 +54,23 @@ Three components, each built from scratch:
 - **Threat creation and blocking**: Finds forced wins and blocks opponent threats
 - **Increasingly drawn games**: As both sides improve, draws increase from 0% to 11% of self-play games
 
+## Trained Weights
+
+Trained network weights are attached to the
+[`checkpoints-v1`](https://github.com/adimunot21/alphazero-connect4/releases/tag/checkpoints-v1)
+release.
+
+| File | Contents |
+|---|---|
+| `alphazero_final.pt` | `model_state` after 20 self-play iterations, plus `history` (loss curves and eval results) |
+| `alphazero_iter2.pt` | iteration-2 snapshot — `model_state`, `optimizer_state`, `config`, `history` |
+
+```python
+import torch
+ck = torch.load("alphazero_final.pt", map_location="cpu")
+model.load_state_dict(ck["model_state"])
+```
+
 ## Architecture
 
 ### Neural Network (377K parameters)
